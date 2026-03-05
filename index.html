@@ -1,0 +1,328 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Trophy, 
+  Users, 
+  Zap, 
+  ShieldCheck, 
+  ChevronRight, 
+  ExternalLink,
+  Flag,
+  Calendar,
+  DollarSign,
+  Clock,
+  Layout,
+  MessageSquare
+} from 'lucide-react';
+
+// Custom Discord Icon as Lucide doesn't export one directly
+const DiscordIcon = ({ className }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+  </svg>
+);
+
+// Main App Component
+export default function App() {
+  const [activeTab, setActiveTab] = useState('races');
+
+  return (
+    <div className="min-h-screen bg-neutral-950 text-white font-sans selection:bg-red-600 selection:text-white">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-neutral-950/80 backdrop-blur-md border-b border-white/5">
+        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="bg-red-600 p-1.5 rounded-sm skew-x-[-12deg]">
+              <Trophy className="w-6 h-6 text-white skew-x-[12deg]" />
+            </div>
+            <span className="text-2xl font-black tracking-tighter uppercase italic">
+              Sim<span className="text-red-600">Stake</span>
+            </span>
+          </div>
+          <div className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest text-neutral-400">
+            <a href="#races" className="hover:text-red-600 transition-colors">Races</a>
+            <a href="#rules" className="hover:text-red-600 transition-colors">Rules</a>
+            <a href="#about" className="hover:text-red-600 transition-colors">About</a>
+          </div>
+          <button className="bg-white text-black px-6 py-2 rounded-full font-bold text-sm uppercase hover:bg-red-600 hover:text-white transition-all duration-300">
+            Join Discord
+          </button>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <header className="relative pt-40 pb-20 px-6 overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-20 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-red-600/20 to-transparent"></div>
+          {/* Faux Track Pattern */}
+          <div className="w-full h-full opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/10 border border-red-600/20 text-red-500 text-xs font-bold uppercase tracking-widest mb-6">
+            <Zap className="w-3 h-3 fill-current" />
+            Now Live: Free Invitational
+          </div>
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter italic uppercase mb-6 leading-tight">
+            Skill Pays. <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">
+              Every Day.
+            </span>
+          </h1>
+          <p className="text-lg md:text-xl text-neutral-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            The first sim racing platform designed to reward the mid-pack. 
+            <strong> 50% of the grid breaks even or profits.</strong> No luck. Just talent.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#races" className="bg-red-600 text-white px-8 py-4 rounded-sm font-black uppercase tracking-widest hover:bg-red-700 transition-all transform hover:-translate-y-1 shadow-lg shadow-red-600/20">
+              Register for Next Race
+            </a>
+            <button className="bg-neutral-800 text-white border border-neutral-700 px-8 py-4 rounded-sm font-black uppercase tracking-widest hover:bg-neutral-700 transition-all transform hover:-translate-y-1">
+              How it works
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Live Race Board */}
+      <section id="races" className="py-24 px-6 bg-neutral-900/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div>
+              <h2 className="text-4xl font-black italic uppercase tracking-tighter mb-2">Live Race Board</h2>
+              <p className="text-neutral-400 font-medium">Register for upcoming events and claim your stake.</p>
+            </div>
+            <div className="flex bg-neutral-950 p-1 rounded-lg border border-white/5">
+              <button 
+                onClick={() => setActiveTab('races')}
+                className={`px-6 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all ${activeTab === 'races' ? 'bg-red-600 text-white' : 'text-neutral-500 hover:text-white'}`}
+              >
+                Races
+              </button>
+              <button 
+                onClick={() => setActiveTab('payouts')}
+                className={`px-6 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all ${activeTab === 'payouts' ? 'bg-red-600 text-white' : 'text-neutral-500 hover:text-white'}`}
+              >
+                Payout Logic
+              </button>
+            </div>
+          </div>
+
+          {activeTab === 'races' ? (
+            <div className="space-y-4">
+              {/* Active Race */}
+              <div className="group bg-neutral-950 border border-red-600/30 rounded-xl p-6 md:p-8 flex flex-col lg:flex-row gap-8 items-center transition-all hover:border-red-600/50 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4">
+                  <span className="flex items-center gap-1.5 px-2 py-1 rounded bg-red-600 text-[10px] font-black uppercase italic animate-pulse">
+                    Live
+                  </span>
+                </div>
+                
+                <div className="w-full lg:w-48 aspect-square rounded-lg bg-neutral-800 flex items-center justify-center overflow-hidden border border-white/5">
+                  <img 
+                    src="https://images.unsplash.com/photo-1547915720-307cc2991090?auto=format&fit=crop&w=300&q=80" 
+                    alt="Laguna Seca" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+
+                <div className="flex-1 space-y-4 text-center lg:text-left">
+                  <div>
+                    <h3 className="text-2xl font-black uppercase italic tracking-tighter text-red-500 mb-1">#01: The Free Invitational</h3>
+                    <div className="flex flex-wrap justify-center lg:justify-start gap-4 text-sm font-bold text-neutral-400 uppercase tracking-widest">
+                      <span className="flex items-center gap-1"><Flag className="w-4 h-4" /> Laguna Seca</span>
+                      <span className="flex items-center gap-1 underline decoration-red-600">Mazda MX-5 (Fixed)</span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-y border-white/5">
+                    <div>
+                      <div className="text-[10px] text-neutral-500 font-bold uppercase mb-1">Prize Pool</div>
+                      <div className="text-lg font-black italic">$100.00</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] text-neutral-500 font-bold uppercase mb-1">Entry Fee</div>
+                      <div className="text-lg font-black italic text-green-500">FREE</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] text-neutral-500 font-bold uppercase mb-1">Grid Size</div>
+                      <div className="text-lg font-black italic">20 Slots</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] text-neutral-500 font-bold uppercase mb-1">Format</div>
+                      <div className="text-lg font-black italic">20 Min</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full lg:w-auto">
+                  <button className="w-full lg:w-48 bg-white text-black py-4 rounded font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all">
+                    Register
+                  </button>
+                  <p className="text-center text-[10px] font-bold text-neutral-500 mt-2 uppercase">14 / 20 Slots filled</p>
+                </div>
+              </div>
+
+              {/* Locked Race */}
+              <div className="bg-neutral-950/50 border border-white/5 rounded-xl p-6 opacity-60 flex flex-col md:flex-row gap-6 items-center">
+                <div className="w-16 h-16 rounded-lg bg-neutral-800 flex items-center justify-center">
+                  <Clock className="w-6 h-6 text-neutral-500" />
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-lg font-bold uppercase tracking-tight text-neutral-400">#02: The $10 Grinder</h3>
+                  <p className="text-xs font-bold text-neutral-500 uppercase tracking-widest">Coming Soon • Okayama Short</p>
+                </div>
+                <div className="px-6 py-2 border border-white/10 rounded text-xs font-bold text-neutral-500 uppercase">
+                  Opening in 3 Days
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-neutral-950 border border-white/5 rounded-xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="p-8 border-b border-white/5 text-center">
+                <h3 className="text-2xl font-black italic uppercase italic mb-2">The "Soft-Peak" Model</h3>
+                <p className="text-neutral-400 text-sm max-w-xl mx-auto uppercase font-bold tracking-widest">We don't just pay the winner. We pay the drivers who show up and race clean.</p>
+              </div>
+              <div className="p-4 overflow-x-auto">
+                <table className="w-full text-center">
+                  <thead className="text-[10px] font-black uppercase text-neutral-500 tracking-[0.2em] border-b border-white/5">
+                    <tr>
+                      <th className="py-4">Position</th>
+                      <th className="py-4">Prize Share</th>
+                      <th className="py-4">Break Even?</th>
+                    </tr>
+                  </thead>
+                  <tbody className="font-bold tracking-tight">
+                    <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 text-red-500 uppercase italic">Winner (P1)</td>
+                      <td className="py-4 text-xl font-black italic">$20.00</td>
+                      <td className="py-4 text-green-500">2.0x</td>
+                    </tr>
+                    <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 text-neutral-300 uppercase">Podium (P2-P3)</td>
+                      <td className="py-4">$16.00 - $12.00</td>
+                      <td className="py-4 text-green-500">1.6x+</td>
+                    </tr>
+                    <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 text-neutral-300 uppercase">Top 5 (P4-P5)</td>
+                      <td className="py-4">$10.00 (ea)</td>
+                      <td className="py-4 text-blue-400 font-black">1.0x (Refund)</td>
+                    </tr>
+                    <tr className="bg-red-600/5 hover:bg-red-600/10 transition-colors">
+                      <td className="py-4 text-neutral-300 uppercase">Top 10 (P6-P10)</td>
+                      <td className="py-4">$6.40 (ea)</td>
+                      <td className="py-4 text-neutral-500">0.64x</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Features / Why SimStake */}
+      <section id="about" className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded bg-red-600/10 border border-red-600/20 flex items-center justify-center">
+                <ShieldCheck className="w-6 h-6 text-red-500" />
+              </div>
+              <h4 className="text-xl font-black uppercase italic tracking-tighter">Clean Racing First</h4>
+              <p className="text-neutral-400 text-sm leading-relaxed">
+                Aggressive 17x incident limits are strictly enforced. Dive bombs and reckless behavior result in immediate disqualification from the prize pool.
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded bg-blue-600/10 border border-blue-600/20 flex items-center justify-center">
+                <Clock className="w-6 h-6 text-blue-500" />
+              </div>
+              <h4 className="text-xl font-black uppercase italic tracking-tighter">Rapid Payouts</h4>
+              <p className="text-neutral-400 text-sm leading-relaxed">
+                Manual verification happens immediately after the checkered flag. Cash is sent to your wallet within 60 minutes of race completion.
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="w-12 h-12 rounded bg-green-600/10 border border-green-600/20 flex items-center justify-center">
+                <Layout className="w-6 h-6 text-green-500" />
+              </div>
+              <h4 className="text-xl font-black uppercase italic tracking-tighter">Skill Divisions</h4>
+              <p className="text-neutral-400 text-sm leading-relaxed">
+                Upcoming iRating-capped tiers ensure you're racing against drivers of your level, not world-class aliens.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Rules Summary */}
+      <section id="rules" className="py-24 px-6 bg-red-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-5xl font-black uppercase italic tracking-tighter text-white mb-8">The Code of the Track</h2>
+          <div className="grid sm:grid-cols-2 gap-6 text-left">
+            <div className="bg-black/10 backdrop-blur-sm p-6 rounded-lg border border-white/10">
+              <div className="text-white font-black uppercase mb-2">17x Incident Cap</div>
+              <p className="text-white/80 text-sm">Exceed 17 incident points and you are automatically DQ'd from any prize money, regardless of finish position.</p>
+            </div>
+            <div className="bg-black/10 backdrop-blur-sm p-6 rounded-lg border border-white/10">
+              <div className="text-white font-black uppercase mb-2">BC Compliant</div>
+              <p className="text-white/80 text-sm">Operating under British Columbia's Skill-Based Competition laws. 19+ strictly enforced via registration.</p>
+            </div>
+            <div className="bg-black/10 backdrop-blur-sm p-6 rounded-lg border border-white/10">
+              <div className="text-white font-black uppercase mb-2">Fixed Setups</div>
+              <p className="text-white/80 text-sm">Everyone runs the same setup. No advantage for the engineers, only for the drivers.</p>
+            </div>
+            <div className="bg-black/10 backdrop-blur-sm p-6 rounded-lg border border-white/10">
+              <div className="text-white font-black uppercase mb-2">Instant Discord Verification</div>
+              <p className="text-white/80 text-sm">All race passwords and technical support are managed via our high-speed Discord server.</p>
+            </div>
+          </div>
+          <button className="mt-12 bg-white text-black px-12 py-5 rounded-sm font-black uppercase tracking-widest hover:bg-neutral-900 hover:text-white transition-all">
+            Join the Empire
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-6 border-t border-white/5 text-neutral-500">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="text-center md:text-left">
+            <div className="flex items-center gap-2 mb-4 justify-center md:justify-start">
+              <div className="bg-neutral-800 p-1 rounded-sm">
+                <Trophy className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-lg font-black tracking-tighter uppercase italic text-white">
+                Sim<span className="text-red-600">Stake</span>
+              </span>
+            </div>
+            <p className="text-xs max-w-sm font-medium leading-relaxed">
+              Based in British Columbia, Canada. Must be 19+ to participate in monetized events. Payouts determined by skill-based performance. Not affiliated with iRacing.com.
+            </p>
+          </div>
+          
+          <div className="flex gap-6 text-[10px] font-black uppercase tracking-[0.2em]">
+            <a href="#" className="hover:text-white">Terms</a>
+            <a href="#" className="hover:text-white">Legality</a>
+            <a href="#" className="hover:text-white">Contact</a>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center hover:bg-white/5 cursor-pointer transition-colors">
+              <DiscordIcon className="w-5 h-5" />
+            </div>
+            <div className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center hover:bg-white/5 cursor-pointer transition-colors">
+              <ExternalLink className="w-5 h-5" />
+            </div>
+          </div>
+        </div>
+        <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-white/5 text-center text-[10px] uppercase tracking-widest font-bold">
+          © 2026 SimStake Global. All Rights Reserved.
+        </div>
+      </footer>
+    </div>
+  );
+}
